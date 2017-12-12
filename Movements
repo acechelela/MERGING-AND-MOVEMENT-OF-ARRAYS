@@ -1,0 +1,30 @@
+#define GRAVITATE(_v1, _v2, _xs, _xc, _xi, _ys, _yc, _yi, _x, _y) \
+   do {                                                                    \
+       int break_cond = 0;                                                 \
+       while (!break_cond) {                                               \
+           break_cond = 1;                                                 \
+           for (int _v1 = _xs; _v1 _xc; _v1 += _xi) {                      \
+               for (int _v2 = _ys; _v2 _yc; _v2 += _yi) {                  \
+                   if (!game.grid[x][y] && game.grid[x + _x][y + _y]) {    \
+                       game.grid[x][y] = game.grid[x + _x][y + _y];        \
+                       game.grid[x + _x][y + _y] = break_cond = 0;         \
+                       game.merge_blocks = 1;                                \
+                   }                                                       \
+               }                                                           \
+           }                                                \
+           print_grid(); usleep(40000);                                       \
+       }                                                                   \
+   } while (0)
+       case 1:
+           MERGE_LEFT(x, y, 0, < 3, 1, 0, < 4, 1, 1, 0);
+           break;
+       case 2:
+           MERGE_RIGHT(x, y, 3, > 0, -1, 0, < 4, 1, -1, 0);
+           break;
+       case 3:
+           MERGE_DOWN(y, x, 3, > 0, -1, 0, < 4, 1, 0, -1);
+           break;
+       case 4:
+           MERGE_UP(y, x, 0, < 3, 1, 0, < 4, 1, 0, 1);
+           break;
+   }
